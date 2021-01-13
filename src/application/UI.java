@@ -11,7 +11,7 @@ public class UI {
             }
             System.out.println();//break line
         }
-        System.out.println("  a b c d e f g h");//board struture to play
+        System.out.println("  a b c d e f g h");//board structure to play
     }
 
     public static void printPiece(ChessPiece piece) { //aux method

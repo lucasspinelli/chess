@@ -1,12 +1,15 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Position;
+import chess.pieces.*;
 
 public class ChessMatch {
     private Board board;
 
     public ChessMatch() {
         board = new Board(8,8);//The chess match who has to know the board size
+        inicialSetup();
     }
 
     public ChessPiece[][] getPieces(){ //making a layer to program dont have full access in to the Pieces, just to ChessPiece
@@ -17,5 +20,11 @@ public class ChessMatch {
             }
         }
         return piece;
+    }
+
+    private void inicialSetup(){ // put the pieces in rigth position when the game begun
+        board.placePiece(new Rook(board, Color.WHITE), new Position(2, 1));
+        board.placePiece(new King(board, Color.BLACK), new Position(0, 4));
+        board.placePiece(new King(board, Color.WHITE), new Position(7, 4));
     }
 }

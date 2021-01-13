@@ -9,6 +9,7 @@ public class Piece {
     }
 
     protected Board getBoard() { // just getter, the board will not change
+
         return board;
     }
 }
