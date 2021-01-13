@@ -46,7 +46,8 @@ public class Board {
     }
 
     private boolean positionExists(int row, int column){ // making for test inside Class
-       return row >=0 && row < rows && column > 0 && column < columns;
+       return row >=0 && row < rows && column >= 0 && column < columns; // I forgot  a '=' sign =, the application crashed a lot.
+        // my heart almost stop. LOL
     }
 
     public boolean positionExists(Position position){
