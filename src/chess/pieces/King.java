@@ -13,4 +13,11 @@ public class King extends ChessPiece {
     public String toString() {
         return "K";
     }
+
+    @Override //implement move method
+    public boolean[][] possibleMoves() {
+        // initial matrix starting with every position FALSE and same dimensions of the board
+        boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+        return mat;
+    }
 }

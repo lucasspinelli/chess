@@ -42,6 +42,9 @@ public class ChessMatch {
         if (!board.thereIsAPiece(position)){
             throw new ChessException("There's is nothing here on source position");
         }
+        if(!board.piece(position).isThereAnyPossibleMove()){
+            throw new ChessException("Learn Chess! Theres no possible move for this Piece!");
+        }
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece ){// will receive te chess position already, and them put the piece
