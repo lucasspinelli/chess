@@ -6,11 +6,23 @@ import boardgame.Position;
 import chess.pieces.*;
 
 public class ChessMatch {
+    private int turn;
+    private Color currentPlayer;
     private Board board;
 
     public ChessMatch() {
         board = new Board(8,8);//The chess match who has to know the board size
+        turn = 1;
+        currentPlayer = Color.WHITE; // White is the 1rst to play
         inicialSetup();
+    }
+
+    public int getTurn(){
+        return turn;
+    }
+
+    public Color getCurrentPlayer(){
+        return currentPlayer;
     }
 
     public ChessPiece[][] getPieces(){ //making a layer to program dont have full access in to the Pieces, just to ChessPiece
@@ -35,6 +47,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
+        nextTurn();
         return (ChessPiece)capturedPiece; //Downcasting
     }
 
@@ -49,6 +62,9 @@ public class ChessMatch {
         if (!board.thereIsAPiece(position)){
             throw new ChessException("There's is nothing here on source position");
         }
+        if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){ //DownCasting for use getColor
+            throw new ChessException("Hey you! There's not your piece!");
+        }
         if(!board.piece(position).isThereAnyPossibleMove()){
             throw new ChessException("Learn Chess! Theres no possible move for this Piece!");
         }
@@ -58,6 +74,11 @@ public class ChessMatch {
         if (!board.piece(source).possibleMove(target)){
             throw new ChessException("That's is not a possible move for this piece.");
         }
+    }
+
+    private void nextTurn(){
+        turn ++;
+        currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE; //invert Colors every turn
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece ){// will receive te chess position already, and them put the piece

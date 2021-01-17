@@ -20,7 +20,7 @@ public class Program {
         while (true){
             try{
                 UI.clearScreen(); //clearing screen
-                UI.printBoard(chessMatch.getPieces()); //to print the board User Interface
+                UI.printMatch(chessMatch); //to print the board User Interface
                 System.out.println();
                 System.out.print("Source: ");
                 ChessPosition source = UI.readChessPosition(sc);
