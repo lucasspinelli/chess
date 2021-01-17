@@ -13,7 +13,7 @@ public abstract class ChessPiece extends Piece { //abstract becausa whe dont kno
     }
 
     protected boolean isThereOpponentPiece(Position position) {
-        ChessPiece p = (ChessPiece) getBoard().piece(position);// p receives the position, with downcasting to work
+        ChessPiece p = (ChessPiece)getBoard().piece(position);// p receives the position, with downcasting to work
         return p != null && p.getColor() != color; // If is an opposite color, will return true.
     }
 

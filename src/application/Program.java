@@ -35,14 +35,6 @@ public class Program {
                 System.out.println(e.getMessage());
                 sc.nextLine(); // Program do not stop process after that, wait the user enter
             }
-            catch (InputMismatchException e){
-                System.out.println(e.getMessage());
-                sc.nextLine(); // Program do not stop process after that, wait the user enter
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
 

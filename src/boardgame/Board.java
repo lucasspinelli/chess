@@ -45,17 +45,17 @@ public class Board {
         pieces[position.getRow()][position.getColumn()] = piece;
     }
 
-    public Piece removePiece(Position postion){
-        if (!positionExists(postion)){
-            throw new BoardException("That position is not on the board :,(");
+    public Piece removePiece(Position position){
+        if (!positionExists(position)){
+            throw new BoardException("That position is not on the board ");
         }
-        if (piece(postion) == null){
+        if (piece(position) == null){
             return null;
         }
 
-        Piece aux = piece(postion);
+        Piece aux = piece(position);
         aux.position = null;
-        pieces[postion.getRow()][postion.getColumn()] = null;
+        pieces[position.getRow()][position.getColumn()] = null;
         return aux;
     }
 

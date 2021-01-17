@@ -6,6 +6,7 @@ public abstract class Piece {
 
     public Piece(Board board) { //constructor just with board, because Piece first position is null
         this.board = board;
+        position = null;
     }
 
     protected Board getBoard() { // just getter, the board will not change
@@ -14,15 +15,15 @@ public abstract class Piece {
     }
     public abstract boolean[][] possibleMoves(); //We will put every possible move as TRUE and the other places will be FALSE
 
-    public boolean possibleMove(Position position){ //hook method = when concrete method returns an abstract one
-        return possibleMoves()[position.getRow()][position.getColumn()];
+    public boolean possibleMove(Position position) {
+        return possibleMoves()[position.getRow()][position.getColumn()];//hook method = when concrete method returns an abstract one
     }
 
-    public boolean isThereAnyPossibleMove(){
+    public boolean isThereAnyPossibleMove() {
         boolean[][] mat = possibleMoves();
         for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat.length ; j++) {
-                if (mat[i][j]){ //if that position was TRUE
+            for (int j = 0; j < mat.length; j++) {
+                if (mat[i][j]) {
                     return true;
                 }
             }
