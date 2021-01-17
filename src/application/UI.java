@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -32,6 +33,13 @@ public class UI {
         catch (RuntimeException e){
             throw new InputMismatchException("Error reading chess position"); // native input error from Java
         }
+    }
+
+    public static void printMatch(ChessMatch chessMatch){ //show the turn data
+        printBoard(chessMatch.getPieces());
+        System.out.println();
+        System.out.println("Turn: " + chessMatch.getTurn());
+        System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
     }
 
     public static void printBoard(ChessPiece[][] pieces) {
