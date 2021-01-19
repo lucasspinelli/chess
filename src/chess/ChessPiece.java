@@ -6,6 +6,7 @@ import boardgame.Position;
 
 public abstract class ChessPiece extends Piece { //abstract becausa whe dont know the move Method, because ChessPiece could be anyone
     private Color color;
+    private int moveCount;
 
     public ChessPiece(Board board, Color color) {
         super(board);
@@ -24,5 +25,18 @@ public abstract class ChessPiece extends Piece { //abstract becausa whe dont kno
     public Color getColor() { //just for access and not to chance
         return color;
     }
+
+    public int getMoveCount(){
+        return moveCount;
+    }
+
+    public void increaseMoveCount(){
+        moveCount++;
+    }
+
+    public void decreaseMoveCount(){
+        moveCount--;
+    }
+
 }
 
