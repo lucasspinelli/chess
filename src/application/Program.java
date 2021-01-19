@@ -20,7 +20,7 @@ public class Program {
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
 
-        while (true){
+        while (!chessMatch.getCheckMate()){
             try{
                 UI.clearScreen(); //clearing screen
                 UI.printMatch(chessMatch, captured); //to print the board User Interface
@@ -45,7 +45,8 @@ public class Program {
                 sc.nextLine(); // Program do not stop process after that, wait the user enter
             }
         }
-
+        UI.clearScreen();
+        UI.printMatch(chessMatch, captured);
 
     }
 }
