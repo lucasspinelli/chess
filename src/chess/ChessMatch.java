@@ -14,6 +14,7 @@ public class ChessMatch {
     private Color currentPlayer;
     private Board board;
     private boolean check; // standard false
+    private boolean checkMate;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -34,6 +35,9 @@ public class ChessMatch {
     }
     public boolean getCheck(){
         return check;
+    }
+    public boolean getCheckMate(){
+        return checkMate;
     }
 
     public ChessPiece[][] getPieces(){ //making a layer to program dont have full access in to the Pieces, just to ChessPiece
@@ -67,7 +71,11 @@ public class ChessMatch {
 
         check = (testCheck(oponnent(currentPlayer))) ? true : false; // testing if current player made a move thats put opponent in check
 
-        nextTurn();
+        if(testCheck(oponnent(currentPlayer))){
+            checkMate = true;
+        } else {
+            nextTurn();
+        }
         return (ChessPiece)capturedPiece; //Downcasting
     }
 
@@ -145,23 +153,42 @@ public class ChessMatch {
         return false;
     }
 
+    private boolean testCheckMate(Color color){
+        if(!testCheck(color)){
+            return false;
+        }
+
+        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+
+        for (Piece p : list) {
+            boolean[][] mat = p.possibleMoves();
+            for (int i = 0; i < board.getRows(); i++) {
+                for (int j = 0; j < board.getColumns() ; j++) {
+                    if(mat[i][j]){
+                        Position source = ((ChessPiece)p).getChessPosition().toPosition();
+                        Position target = new Position(i, j);
+                        Piece capturedPiece = makeMove(source, target); //Possible capturedPiece
+                        boolean testCheck = testCheck(color);
+                        undoMove(source, target, capturedPiece); //to not make our board crazy
+                        if (!testCheck){ //moves take out of check
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     private void placeNewPiece(char column, int row, ChessPiece piece ){// will receive te chess position already, and them put the piece
         board.placePiece(piece, new ChessPosition(column, row).toPosition()); //call chess position and converted to matrix position
         piecesOnTheBoard.add(piece);
     }
     private void inicialSetup(){ // put the pieces in rigth position when the game begun
-        placeNewPiece('c', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new King(board, Color.WHITE));
-
-        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 8, new King(board, Color.BLACK));
+        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 8, new King(board, Color.BLACK));
     }
 }
