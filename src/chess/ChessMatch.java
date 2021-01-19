@@ -7,11 +7,13 @@ import chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private Board board;
+    private boolean check; // standard false
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -70,6 +72,17 @@ public class ChessMatch {
         return capturedPiece;
     }
 
+    private void undoMove(Position source, Position target, Piece capturedPiece){ //opposite of Make a move
+        Piece p = board.removePiece(target);
+        board.placePiece(p, source);
+
+        if (capturedPiece != null){
+            board.placePiece(capturedPiece, target);
+            capturedPieces.remove(capturedPiece);
+            piecesOnTheBoard.add(capturedPiece);
+        }
+    }
+
     private void validateSourcePosition(Position position){
         if (!board.thereIsAPiece(position)){
             throw new ChessException("There's is nothing here on source position");
@@ -91,6 +104,20 @@ public class ChessMatch {
     private void nextTurn(){
         turn ++;
         currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE; //invert Colors every turn
+    }
+
+    private Color oponnent(Color color){
+        return (color == Color.WHITE) ? Color.BLACK : Color.WHITE; // To see which are opponents
+    }
+
+    private ChessPiece king(Color color){
+        List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+        for (Piece p : list){
+            if (p instanceof King) { // To see if there's an opponent king in the field
+                return (ChessPiece) p; //DownCasting
+            }
+        }
+        throw new IllegalStateException("There is no " + color + "king on the board"); //Please god, never throw this on the screen LOL
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece ){// will receive te chess position already, and them put the piece
