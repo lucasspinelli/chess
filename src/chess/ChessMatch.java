@@ -32,6 +32,9 @@ public class ChessMatch {
     public Color getCurrentPlayer(){
         return currentPlayer;
     }
+    public boolean getCheck(){
+        return check;
+    }
 
     public ChessPiece[][] getPieces(){ //making a layer to program dont have full access in to the Pieces, just to ChessPiece
         ChessPiece[][] piece = new ChessPiece[board.getRows()][board.getColumns()];//temporly use to output board
@@ -55,6 +58,15 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
+        //test if the player made some move that put himself in check
+
+        if (testCheck(currentPlayer)) {
+            undoMove(source, target, capturedPiece);
+            throw new ChessException("Hey, lookout! You can't put yourself in check!!");
+        }
+
+        check = (testCheck(oponnent(currentPlayer))) ? true : false; // testing if current player made a move thats put opponent in check
+
         nextTurn();
         return (ChessPiece)capturedPiece; //Downcasting
     }
@@ -118,6 +130,19 @@ public class ChessMatch {
             }
         }
         throw new IllegalStateException("There is no " + color + "king on the board"); //Please god, never throw this on the screen LOL
+    }
+
+    private boolean testCheck(Color color){ //Will run all the list of opponent pieces and validate if theres a possible move with the king in some target position
+        Position kingPosition = king(color).getChessPosition().toPosition(); //chess position of the king
+        //filter all actual king opponent  pieces
+        List<Piece> oponnentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == oponnent(color)).collect(Collectors.toList());
+        for(Piece p : oponnentPieces) {
+            boolean[][] mat = p.possibleMoves(); // possible Moves matrix
+            if(mat[kingPosition.getRow()][kingPosition.getColumn()]) { //testing if the piece can move to the king position
+                return true;
+            }
+        }
+        return false;
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece ){// will receive te chess position already, and them put the piece
