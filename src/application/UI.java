@@ -25,15 +25,14 @@ public class UI {
     }
 
     public static ChessPosition readChessPosition(Scanner sc){
-        try{ // avoid type error
+        try { //avoid type error
             String s = sc.nextLine();
             char column = s.charAt(0);
             int row = Integer.parseInt(s.substring(1));
-
             return new ChessPosition(column, row);
-        }
-        catch (RuntimeException e){
-            throw new InputMismatchException("Error reading chess position"); // native input error from Java
+         }
+        catch (RuntimeException e) {
+            throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8.");
         }
     }
 

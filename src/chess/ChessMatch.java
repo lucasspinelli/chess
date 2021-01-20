@@ -109,6 +109,7 @@ public class ChessMatch {
         if (!board.thereIsAPiece(position)){
             throw new ChessException("There's is nothing here on source position");
         }
+
         if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){ //DownCasting for use getColor
             throw new ChessException("Hey you! There's not your piece!");
         }
