@@ -71,7 +71,7 @@ public class ChessMatch {
 
         check = (testCheck(oponnent(currentPlayer))) ? true : false; // testing if current player made a move thats put opponent in check
 
-        if(testCheck(oponnent(currentPlayer))){
+        if(testCheckMate(oponnent(currentPlayer))){
             checkMate = true;
         } else {
             nextTurn();

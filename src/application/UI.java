@@ -50,7 +50,7 @@ public class UI {
             }
         } else {
             System.out.println("CHECKMATE!!!!");
-            System.out.println("Winner Winner Chiken Dinner, " + chessMatch.getCurrentPlayer());
+            System.out.println("Winner Winner Chicken Dinner, " + chessMatch.getCurrentPlayer());
         }
 
     }
