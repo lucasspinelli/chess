@@ -5,6 +5,7 @@ import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ public class ChessMatch {
     private boolean check; // standard false
     private boolean checkMate;
     private ChessPiece enPassantVulnerable; // that move that a pawn takes another in line
+    private ChessPiece promoted; // to promote some pawn that reaches the other side pf the board
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
@@ -42,6 +44,9 @@ public class ChessMatch {
     }
     public ChessPiece getEnPassantVulnerable() {
         return enPassantVulnerable;
+    }
+    public ChessPiece getPromoted(){
+        return promoted;
     }
 
 
@@ -76,6 +81,16 @@ public class ChessMatch {
 
         ChessPiece movedPiece = (ChessPiece)board.piece(target);
 
+        //Special move - Promotion
+        // Testing before Check, because if Pawn is promoted to a powerfull piece. that piece can put the king in Check
+        promoted = null;
+        if (movedPiece instanceof Pawn){
+            if((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)){ //it means that white or black pawn reaches te end
+                promoted = (ChessPiece)board.piece(target);
+                promoted = replacePromotedPiece("Q"); //default to promote to Queen
+            }
+        }
+
         check = (testCheck(oponnent(currentPlayer))) ? true : false; // testing if current player made a move thats put opponent in check
 
         if(testCheckMate(oponnent(currentPlayer))){
@@ -92,6 +107,33 @@ public class ChessMatch {
             enPassantVulnerable = null;
         }
         return (ChessPiece)capturedPiece; //Downcasting
+    }
+
+    public ChessPiece replacePromotedPiece(String type){
+        if(promoted == null){ // there's no piece to be promoted
+            throw new IllegalStateException("There's no piece to be promoted");
+        }
+        if (!type.equals("B") && !type.equals("N") && !type.equals("R") && !type.equals("Q")){
+            throw new InvalidParameterException("Look out! Invalid type of promotion");
+        }
+        //remove pawn
+        Position pos = promoted.getChessPosition().toPosition();
+        Piece p = board.removePiece(pos);
+        piecesOnTheBoard.remove(p);
+
+        //place the new piece
+        ChessPiece newPiece = newPiece(type, promoted.getColor());
+        board.placePiece(newPiece, pos);
+        piecesOnTheBoard.add(newPiece);
+
+        return newPiece;
+    }
+
+    private ChessPiece newPiece(String type, Color color){ //aux method
+        if (type.equals("B")) return new Bishop(board, color);
+        if (type.equals("N")) return new Knight(board, color);
+        if (type.equals("Q")) return new Queen(board, color);
+        return new Rook(board, color); //if isn't anyone else
     }
 
     private Piece makeMove(Position source, Position target){
