@@ -7,7 +7,6 @@ import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Program {
