@@ -34,7 +34,7 @@ public class Pawn extends ChessPiece {
             }
             Position p2 = new Position(position.getRow() -1, position.getColumn());
             p.setValues(position.getRow() -2, position.getColumn()); //first move
-            if (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)&& getBoard().positionExists(p2) && !getBoard().thereIsAPiece(p2) && getMoveCount() ==0){
+            if (getBoard().positionExists(p) && !getBoard().thereIsAPiece(p)&& getBoard().positionExists(p2) && !getBoard().thereIsAPiece(p2) && getMoveCount() == 0){
                 mat[p.getRow()][p.getColumn()] = true;
             }
             p.setValues(position.getRow() -1, position.getColumn() - 1); //lateral move left

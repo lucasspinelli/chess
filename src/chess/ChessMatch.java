@@ -98,7 +98,7 @@ public class ChessMatch {
             nextTurn();
         }
 
-        // Wn Passant - Special Move
+        // En Passant - Special Move
         if (movedPiece instanceof Pawn && (target.getRow() == source.getRow() - 2 || target.getRow() == source.getRow() + 2)) {
             enPassantVulnerable = movedPiece;
         }
@@ -310,6 +310,8 @@ public class ChessMatch {
         piecesOnTheBoard.add(piece);
     }
     private void inicialSetup(){ // put the pieces in rigth position when the game begun
+
+        //white pieces
         placeNewPiece('a', 1, new Rook(board, Color.WHITE));
         placeNewPiece('b', 1, new Knight(board, Color.WHITE));
         placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
@@ -327,6 +329,8 @@ public class ChessMatch {
         placeNewPiece('g', 2, new Pawn(board, Color.WHITE, this));
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE, this));
 
+
+        //black pieces
         placeNewPiece('a', 8, new Rook(board, Color.BLACK));
         placeNewPiece('b', 8, new Knight(board, Color.BLACK));
         placeNewPiece('c', 8, new Bishop(board, Color.BLACK));
