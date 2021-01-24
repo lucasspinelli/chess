@@ -1,6 +1,6 @@
 ## Chess System made in Java. 
 
-![GitHub Logo](img/Cambito da rainha .png)
+![GitHub Logo](/img/Cambito da rainha .png)
 
 ### How to run 
 
