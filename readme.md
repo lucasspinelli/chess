@@ -13,7 +13,7 @@ java application/Program
 
 ### How to play
 - After the game starts, we have this on CMD 
-<img src = "/img/play-chess.png" width: 200px heigth: 200px> </img>
+![GitHub Logo](/img/play-chess.png)
 - Black pieces are Red, and white pieces are Blue. 
 - Choose the piece thatt you want to move, typing the source position of that piece 
 ´´´c
