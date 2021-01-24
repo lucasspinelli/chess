@@ -1,6 +1,6 @@
 ## Chess System made in Java. 
 
-![GitHub Logo](/img/gambitodolucas.png
+![GitHub Logo](/img/gambitodolucas.png)
 
 ### How to run 
 
