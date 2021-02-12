@@ -17,8 +17,14 @@ java application/Program
 - Black pieces are Red, and white pieces are Blue. 
 - Choose the piece thatt you want to move, typing the source position of that piece Like : a2 / b2 / a7 / b7
 - The game will show you the possible moves, change the background color to greend in the possible places. 
-- Choose one green spot, and wait your opponent turn. 
-
+- Choose one green spot, and wait your opponent turn. </br>
+The Pieces: </br>
+- P = Pawn 
+- R = Rook 
+- N = Kinight 
+- B = Bishop 
+- Q = Queen 
+- K = King
 
 ### IMPORTANT!! 
 - You need to learn to play chess before testing the program
